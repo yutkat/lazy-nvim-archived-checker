@@ -1,6 +1,6 @@
 # Lazy.nvim Archived Plugin Checker
 
-A GitHub Action to check if your Neovim plugins managed by lazy.nvim are archived or deleted.
+A GitHub Action to check if your Neovim plugins managed by [lazy.nvim](https://github.com/folke/lazy.nvim) are archived or deleted.
 
 ## Features
 
