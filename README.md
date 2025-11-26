@@ -16,7 +16,7 @@ A GitHub Action to check if your Neovim plugins managed by [lazy.nvim](https://g
 
 ### Basic Setup
 
-1. Create a workflow file in your repository (e.g., `.github/workflows/check-plugins.yml`):
+1. Create a workflow file in your repository (e.g., `.github/workflows/check-neovim-plugins.yml`):
 
 ```yaml
 name: Check Neovim Plugins
@@ -31,7 +31,7 @@ permissions:
   issues: write
 
 jobs:
-  check-plugins:
+  check-neovim-plugins:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Neovim config
