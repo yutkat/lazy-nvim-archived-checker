@@ -1,0 +1,60 @@
+name: Check Neovim Plugins
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-plugins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Checkout Neovim config
+        uses: actions/checkout@v6
+        with:
+          repository: yutkat/dotfiles
+          path: dotfiles
+
+      - name: Check plugins
+        id: check
+        uses: ./ # Use the action from this repository
+        with:
+          nvim-config-path: ${{ github.workspace }}/dotfiles
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Display results
+        if: always()
+        env:
+          HAS_ISSUES: ${{ steps.check.outputs.has-issues }}
+          ARCHIVED_PLUGINS: ${{ steps.check.outputs.archived-plugins }}
+          DELETED_PLUGINS: ${{ steps.check.outputs.deleted-plugins }}
+        run: |
+          echo "### Plugin Check Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$HAS_ISSUES" = "true" ]; then
+            echo "⚠️ **Issues found!**" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+
+            if [ "$ARCHIVED_PLUGINS" != "[]" ] && [ -n "$ARCHIVED_PLUGINS" ]; then
+              echo "**Archived Plugins:**" >> "$GITHUB_STEP_SUMMARY"
+              echo "$ARCHIVED_PLUGINS" | jq -r '.[]' | while read -r plugin; do
+                echo "- 📦 $plugin" >> "$GITHUB_STEP_SUMMARY"
+              done
+              echo "" >> "$GITHUB_STEP_SUMMARY"
+            fi
+
+            if [ "$DELETED_PLUGINS" != "[]" ] && [ -n "$DELETED_PLUGINS" ]; then
+              echo "**Deleted Plugins:**" >> "$GITHUB_STEP_SUMMARY"
+              echo "$DELETED_PLUGINS" | jq -r '.[]' | while read -r plugin; do
+                echo "- ❌ $plugin" >> "$GITHUB_STEP_SUMMARY"
+              done
+            fi
+          else
+            echo "✅ All plugins are healthy!" >> "$GITHUB_STEP_SUMMARY"
+          fi

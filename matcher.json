@@ -1,0 +1,26 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "lazy-nvim-archived-checker",
+      "pattern": [
+        {
+          "regexp": "^\\[ARCHIVED\\]\\s+(.+)$",
+          "file": 1,
+          "severity": "warning",
+          "message": "This plugin is archived and no longer maintained"
+        }
+      ]
+    },
+    {
+      "owner": "lazy-nvim-deleted-checker",
+      "pattern": [
+        {
+          "regexp": "^\\[DELETED\\]\\s+(.+)$",
+          "file": 1,
+          "severity": "error",
+          "message": "This plugin repository has been deleted"
+        }
+      ]
+    }
+  ]
+}
