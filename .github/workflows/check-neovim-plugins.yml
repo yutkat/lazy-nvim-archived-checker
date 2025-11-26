@@ -1,6 +1,10 @@
 name: Check Neovim Plugins
 
 on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -24,7 +28,7 @@ jobs:
         id: check
         uses: ./ # Use the action from this repository
         with:
-          nvim-config-path: ${{ github.workspace }}/dotfiles
+          nvim-config-path: ${{ github.workspace }}/dotfiles/.config/nvim
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Display results

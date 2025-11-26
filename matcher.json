@@ -2,23 +2,34 @@
   "problemMatcher": [
     {
       "owner": "lazy-nvim-archived-checker",
+      "severity": "warning",
       "pattern": [
         {
-          "regexp": "^\\[ARCHIVED\\]\\s+(.+)$",
+          "regexp": "^\\[ARCHIVED\\]\\s+(.+):\\s*(.+)$",
           "file": 1,
-          "severity": "warning",
-          "message": "This plugin is archived and no longer maintained"
+          "message": 2
+        }
+      ]
+    },
+    {
+      "owner": "lazy-nvim-moved-checker",
+      "severity": "warning",
+      "pattern": [
+        {
+          "regexp": "^\\[MOVED\\]\\s+(.+)\\s*->\\s*(.+):\\s*(.+)$",
+          "file": 1,
+          "message": 3
         }
       ]
     },
     {
       "owner": "lazy-nvim-deleted-checker",
+      "severity": "error",
       "pattern": [
         {
-          "regexp": "^\\[DELETED\\]\\s+(.+)$",
+          "regexp": "^\\[DELETED\\]\\s+(.+):\\s*(.+)$",
           "file": 1,
-          "severity": "error",
-          "message": "This plugin repository has been deleted"
+          "message": 2
         }
       ]
     }

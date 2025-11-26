@@ -14,12 +14,12 @@ CONFIG_PATH="${NVIM_CONFIG_PATH/#\~/$HOME}"
 echo "Using Neovim config at: $CONFIG_PATH"
 
 # Extract plugin URLs
-nvim --headless -u "$CONFIG_PATH/init.lua" -c 'lua vim.defer_fn(function()
+nvim --headless -u "$CONFIG_PATH/init.lua" --cmd "set runtimepath+=$CONFIG_PATH" -c 'lua vim.defer_fn(function()
   for _, plugin in ipairs(require("lazy").plugins()) do
     io.write(plugin.url .. "\n")
   end
   vim.cmd("qall")
-end, 100)' 2>/dev/null >plugins.txt || true
+end, 100)' >plugins.txt || true
 
 # Filter GitHub URLs and convert to owner/repo format
 grep -E "^https://github.com/" plugins.txt |
