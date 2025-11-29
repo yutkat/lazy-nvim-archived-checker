@@ -32,10 +32,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup problem matcher
-      shell: bash
-      run: echo "::add-matcher::${{ github.action_path }}/matcher.json"
-
     - name: Setup Neovim
       shell: bash
       run: |
