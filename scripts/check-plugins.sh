@@ -42,7 +42,6 @@ while IFS= read -r repo; do
   # Check if repository exists
   if echo "$response" | jq -e '.message == "Not Found"' >/dev/null 2>&1; then
     echo "  ❌ DELETED: $repo"
-    echo "::error file=$repo::This plugin repository has been deleted"
     echo "[DELETED] $repo: This plugin repository has been deleted"
     deleted_plugins+=("$repo")
     has_issues=true
@@ -58,7 +57,6 @@ while IFS= read -r repo; do
 
   if [ "$repo_lower" != "$full_name_lower" ]; then
     echo "  ➡️ MOVED: $repo -> $full_name"
-    echo "::warning file=$repo::This plugin has moved to $full_name"
     echo "[MOVED] $repo -> $full_name: This plugin has moved to $full_name"
     # Store as JSON object string
     moved_plugins+=("{\"old\": \"$repo\", \"new\": \"$full_name\"}")
@@ -70,7 +68,6 @@ while IFS= read -r repo; do
 
   if [ "$is_archived" = "true" ]; then
     echo "  📦 ARCHIVED: $repo"
-    echo "::warning file=$repo::This plugin is archived and no longer maintained"
     echo "[ARCHIVED] $repo: This plugin is archived and no longer maintained"
     archived_plugins+=("$repo")
     has_issues=true
